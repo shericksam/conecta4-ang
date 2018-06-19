@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+body {
+    overflow: hidden;
+}
+
+#contenedor {
+    position: relative;
+    margin: 5vh auto;
+    width: 1200px;
+    height: 720px;
+    background: url("/assets/imagenes/gameBackground.png")
+}
+
+#lienzo {
+    background: url("/assets/imagenes/gridoverlaysmall.png");
+    z-index: 3;
+    position: absolute;
+}
+
+#dics {
+    /* background: url("/assets/imagenes/gridoverlaysmall.png"); */
+    z-index: 2;
+    position: absolute;
+}
+
+#background {
+    background: url("/assets/imagenes/gridbackgroundsamll.png");
+    z-index: 1;
+    position: absolute;
+}
+
+#vertical {
+    display: none;
+}
+
+@media all and (orientation: portrait) {
+    #contenedor {
+        display: none;
+    }
+    #vertical {
+        display: block;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        background: url("/assets/imagenes/vertical.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+}
