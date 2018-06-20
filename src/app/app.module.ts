@@ -6,12 +6,15 @@ import { VarComponent } from './componentes/var/var.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { TableroComponent } from './componentes/tablero/tablero.component';
+import { LoginComponent } from './componentes/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     VarComponent,
-    TableroComponent
+    TableroComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +24,8 @@ import { TableroComponent } from './componentes/tablero/tablero.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

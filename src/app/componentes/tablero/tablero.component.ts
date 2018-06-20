@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-tablero',
@@ -6,112 +7,73 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./tablero.component.css']
 })
 export class TableroComponent implements OnInit {
-
-  constructor() { }
+  finished:boolean = false;
+  matriz= new Array();
+  players = {};
+  current;
+  colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
+  constructor() {      
+    var row1 = [0,0,0,0,0,0,0];
+    var row2 = [0,0,0,0,0,0,0];
+    var row3 = [0,0,0,0,0,0,0];
+    var row4 = [0,0,0,0,0,0,0];
+    var row5 = [0,0,0,0,0,0,0];
+    var row6 = [0,0,0,0,0,0,0];
+    this.matriz.push(row1);
+    this.matriz.push(row2);
+    this.matriz.push(row3);
+    this.matriz.push(row4);
+    this.matriz.push(row5);
+    this.matriz.push(row6);
+   }
 
   ngOnInit() {
-    
-    this.imagen = new Image();
-    this.imagen.src = "/assets/imagenes/bluedisc.png";
-    
+    this.players[1] = "Amarillo";
+    this.players[2] = "Rojo";
+    this.start();
   }
 
-  imagen;
-  context: CanvasRenderingContext2D;
-  contextDisc: CanvasRenderingContext2D;
-  @ViewChild( 'lienzo' ) canvas: ElementRef;
-  @ViewChild( 'dics' ) disc: ElementRef;
+  start(){
+    this.current = this.laststart = (this.laststart + 1) % 2;
+    this.finished = false;
+    this.colorLabel = this.players[this.current = (this.current + 1) % 2];
+    for (var a = 0; a < 6; a++)//row
+        for (var b = 0; b < 7; b++)//col
+            this.matriz[a][b] = 0;
 
-
-  ngAfterViewInit() {
-    const canvas = this.canvas.nativeElement;
-    this.context = canvas.getContext( '2d' );
-    const canvasDisc = this.disc.nativeElement;
-    this.contextDisc = canvasDisc.getContext( '2d' );
-
-    this.tick();
   }
 
-  tick() {
-      requestAnimationFrame(() => this.tick() );
-      const ctx = this.context;
-      const ctxDisc = this.contextDisc;
-      ctx.clearRect( 0, 0, 600, 400);
-      ctxDisc.clearRect( 0, 0, 600, 720);
-
-      ctx.lineWidth= 5;
-      ctx.strokeStyle = "rgba(255,0,255,1)";
-      //x , y, w , h
-      ctx.beginPath();
-      ctx.rect(190, 85, 100, 580);
-      // ctx.
-      ctx.stroke();
-      ctx.closePath();
-
-
-      ctxDisc.beginPath();
-      ctx.canvas.addEventListener("click", () => {
-        
-      });
-      ctxDisc.clearRect(0, 0, 82, 82);
-      ctxDisc.drawImage(this.imagen, 199, this.posy);
-      if(this.posy < 570){
-
-        this.posy += 7;
-        // setInterval(this.caer, 20);
+  onClick(col, row){  
+    //   console.log('color' + row + "" + col);
+    if (!this.finished){
+      for (row = 5; row >= 0; row--){
+        // console.log("row, col ", row, col);
+          if (this.cellAt(row, col) == 0) {
+              this.makeMove(row, col, 0);
+              break;
+          }
       }
-      ctxDisc.closePath();
-
-      ctx.beginPath();
-      ctx.rect(310, 85, 100, 580);
-      ctx.stroke();
-      ctx.closePath();
-
-      
-      ctx.beginPath();
-      ctx.rect(430, 85, 100, 580);
-      ctx.stroke();
-      ctx.closePath();
-      
-      
-      ctx.beginPath();
-      ctx.rect(550, 85, 100, 580);
-      ctx.stroke();
-      ctx.closePath();
-      
-      
-      ctx.beginPath();
-      ctx.rect(670, 85, 100, 580);
-      ctx.stroke();
-      ctx.closePath();
-      
-      
-      ctx.beginPath();
-      ctx.rect(790, 85, 100, 580);
-      ctx.stroke();
-      ctx.closePath();
-      
-      
-      ctx.beginPath();
-      ctx.rect(910, 85, 100, 580);
-      ctx.stroke();
-      ctx.closePath();
-
-      // ctx.rect(298, 85, 130, 580);
-      // ctx.stroke();
-
-      // ctx.rect(428, 85, 130, 580);
-      // ctx.stroke();
-      // draw stuff
+    }
   }
-  posy = 93;
 
-  caer(){
-    // requestAnimationFrame(() => this.caer() );
-    // this.contextDisc.clearRect(0, 0, 82, 82);
-    // this.contextDisc.beginPath();
-    // this.contextDisc.destroy();
-    // ctx.drawImage
-    
+  public makeMove(row, col, s) {
+    this.matriz[row][col] = this.current;
+    this.current = this.current == 1 ? 2 : 1;
+    this.colorLabel = this.players[this.current];
+
+  }
+
+  cellAt(row, col) {
+    // console.log("valor" + this.matriz[i][j], "C=" + i, "R=" + j);
+      return this.matriz[row][col];
+  }
+
+  isCurrentColor(i, j) {
+    return this.cellAt(i, j) === this.current;
+  }
+
+  isWiner(){
+    this.finished = true;
+    var mensaje = "El jugador " + this.players[this.current] + "gano. Quieres jugar un nuevo juego?";
   }
 }
