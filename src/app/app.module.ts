@@ -16,7 +16,7 @@ import { Http, HttpModule } from '@angular/http';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { AuthGuard } from './services/auth-guard.service';
 import { SalasComponent } from './componentes/salas/salas.component';
-
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { SalasComponent } from './componentes/salas/salas.component';
     LoginComponent,
     DialogDataExampleDialogComponent,
     SinginComponent,
-    SalasComponent
+    SalasComponent    
   ],
   imports: [
     BrowserModule,
@@ -39,7 +39,8 @@ import { SalasComponent } from './componentes/salas/salas.component';
     FormsModule,
     MatDialogModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    MatCardModule
   ],
   providers: [ConnectServer, AuthService, AuthGuard],
   entryComponents: [DialogDataExampleDialogComponent, SinginComponent],
