@@ -228,6 +228,29 @@ iframe {
     width: 560px;
 }
 
+.container-login50 {
+    width: 100%;
+    min-height: 50vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #2575fc;
+    background: -webkit-linear-gradient(to right, #6a11cb, #2575fc);
+    background: -o-linear-gradient(to right, #6a11cb, #2575fc);
+    background: -moz-linear-gradient(to right, #6a11cb, #2575fc);
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+}
+
+.wrap-login50 {
+    width: 280px;
+}
+
 
 /*==================================================================
 [ Form ]*/

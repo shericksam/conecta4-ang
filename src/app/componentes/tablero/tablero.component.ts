@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import * as $ from 'jquery';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogDataExampleDialogComponent } from '../dialog-data-example-dialog/dialog-data-example-dialog.component';
 
 @Component({
   selector: 'app-tablero',
@@ -12,7 +13,8 @@ export class TableroComponent implements OnInit {
   players = {};
   current;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
-  constructor() {      
+  
+  constructor(public dialog: MatDialog) {      
     var row1 = [0,0,0,0,0,0,0];
     var row2 = [0,0,0,0,0,0,0];
     var row3 = [0,0,0,0,0,0,0];
@@ -45,6 +47,7 @@ export class TableroComponent implements OnInit {
 
   onClick(col, row){  
     //   console.log('color' + row + "" + col);
+    
     if (!this.finished){
       for (row = 5; row >= 0; row--){
         // console.log("row, col ", row, col);
@@ -75,5 +78,19 @@ export class TableroComponent implements OnInit {
   isWiner(){
     this.finished = true;
     var mensaje = "El jugador " + this.players[this.current] + "gano. Quieres jugar un nuevo juego?";
+    
+  }
+
+  openFinishGame() {
+    this.dialog.open(DialogDataExampleDialogComponent, {
+      data: {
+        titulo : "Felicidades!!",
+        ganador: this.players[this.current]
+      }
+    });
+
+    this.start();
+    this.finished = true;
   }
 }
+

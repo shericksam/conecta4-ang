@@ -22,7 +22,14 @@ i {
 }
 
 table {
+    /* background: url("src/assets/imagenes/gridBackground.png"); */
+    z-index: 1;
     width: 100%
+}
+
+#back {
+    background: url("src/assets/imagenes/gameBackground.png");
+    margin: 0;
 }
 
 #game {
@@ -53,7 +60,7 @@ td {
     box-shadow: inset 7px 7px 20px 0 rgba(50, 50, 50, .4);
     opacity: 1;
     height: 40px;
-    background: #fff
+    background: rgb(255, 255, 255)
 }
 
 button {
@@ -68,6 +75,7 @@ table {
 .leg,
 table {
     background: #00f
+    /* background: url("src/assets/imagenes/gridOverlay.png"); */
 }
 
 td:hover {
