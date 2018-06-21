@@ -10,10 +10,12 @@ import { LoginComponent } from './componentes/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { DialogDataExampleDialogComponent } from './componentes/dialog-data-example-dialog/dialog-data-example-dialog.component';
 import { ConnectServer } from './services/connect-server';
-import { AppRoutingModule } from './routing/app-routing.module';
-import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { SinginComponent } from './componentes/singin/singin.component';
+import { Http, HttpModule } from '@angular/http';
+import { AppRoutingModule } from './routing/app-routing.module';
+import { AuthGuard } from './services/auth-guard.service';
+import { SalasComponent } from './componentes/salas/salas.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { SinginComponent } from './componentes/singin/singin.component';
     TableroComponent,
     LoginComponent,
     DialogDataExampleDialogComponent,
-    SinginComponent
+    SinginComponent,
+    SalasComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +38,10 @@ import { SinginComponent } from './componentes/singin/singin.component';
     MatListModule,
     FormsModule,
     MatDialogModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule
   ],
-  providers: [ConnectServer, AuthService],
+  providers: [ConnectServer, AuthService, AuthGuard],
   entryComponents: [DialogDataExampleDialogComponent, SinginComponent],
   bootstrap: [AppComponent]
 })

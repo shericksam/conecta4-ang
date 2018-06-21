@@ -6,13 +6,13 @@
 						Conecta 4
 					</span>
 
-                <div class="wrap-input100 rs1 validate-input" [ngClass]="{'alert-validate': !f.value.username }" data-validate="{{ usernameFail }}">
+                <div class="wrap-input100 rs1 validate-input" [ngClass]="{'alert-validate': !f.value.username }" data-validate="El username es necesario">
                     <input class="input100" type="text" name="username" ngModel required>
                     <span class="label-input100">Username</span>
                 </div>
 
 
-                <div class="wrap-input100 rs2 validate-input" [ngClass]="{'alert-validate': !f.value.pass }" data-validate="{{ passFail }}">
+                <div class="wrap-input100 rs2 validate-input" [ngClass]="{'alert-validate': !f.value.pass }" data-validate="El username es necesario">
                     <input class="input100" type="password" name="pass" ngModel required>
                     <span class="label-input100">Contraseña</span>
                 </div>
@@ -22,7 +22,7 @@
 							Iniciar
 						</button>
                 </div>
-
+                <!-- <div class=" rs1 text-center mensaje"> asdcscfsd</div> -->
                 <div class="text-center w-full p-t-23">
                     <button type="button" class="txt1" (click)="onCreateAccount(f)">Crear Cuenta</button>
                 </div>
@@ -30,4 +30,4 @@
 
         </div>
     </div>
-    <!-- </div> -->
+</div>

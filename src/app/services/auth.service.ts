@@ -8,6 +8,9 @@ export class AuthService {
   constructor(private router: Router, private connectServer: ConnectServer) {}
 
   signinUser(username: string, password: string, callback) {
+    localStorage.setItem("token",  this.token = "this.token = response.json().token");
+    this.router.navigateByUrl('/tablero');
+
     this.connectServer.singIn(username,
       password).subscribe((response) => {
         if(response.ok){

@@ -10,7 +10,7 @@ import { AuthGuard } from '../services/auth-guard.service';
 // y el servicio de auth
 
 const routes: Routes = [  
-  { path: '', redirectTo: '/singin', pathMatch: 'full' },
+  { path: '', redirectTo: 'singin', pathMatch: 'full' },
   { path: "singin", component: LoginComponent},
   { path: "tablero", component: TableroComponent,canActivate:[AuthGuard] },
   { path: '**', component: LoginComponent }  

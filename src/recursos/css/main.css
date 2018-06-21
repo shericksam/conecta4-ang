@@ -478,6 +478,37 @@ input.input100 {
     transition: opacity 0.4s;
 }
 
+.mensaje {
+    /* .alert-validate::before { */
+    position: absolute;
+    z-index: 100;
+    max-width: 70%;
+    background-color: #fff;
+    border: 1px solid #c80000;
+    border-radius: 2px;
+    /* padding: 4px 25px 4px 10px; */
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 12px;
+    pointer-events: none;
+    font-family: OpenSans-Bold;
+    color: #c80000;
+    /* font-size: 13px; */
+    line-height: 1.4;
+    /* text-align: left; */
+    /* visibility: hidden; */
+    /* opacity: 0; */
+    -webkit-transition: opacity 0.4s;
+    -o-transition: opacity 0.4s;
+    -moz-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    /* } */
+}
+
 .alert-validate::after {
     content: "\f12a";
     font-family: FontAwesome;
