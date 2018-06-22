@@ -16,7 +16,7 @@ export class TableroComponent implements OnInit {
   currentId;
   player;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
-  ws = Ws('ws://localhost:3333')
+  ws = Ws('ws://192.168.1.80:3333')
   channel;
   isReady=false;
   
@@ -66,7 +66,7 @@ export class TableroComponent implements OnInit {
     listen.on('new-selection',(data)=>{
       this.makeMove(data.x, data.y, 0);
     });
-    
+
     listen.on('winner',(data)=>{
       this.openFinishGame();
     });
