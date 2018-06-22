@@ -1,8 +1,9 @@
 <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true">
     <mat-sidenav #drawer class="sidenav"  fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="!(isHandset$ | async)">
-        <mat-toolbar color="primary">Menu</mat-toolbar>
+        <mat-toolbar color="primary">Estadisticas</mat-toolbar>
         <mat-nav-list>
-            <button (click)="estadisticas">Mostrar estadisticas</button>
+            <!-- <button (click)="estadisticas">Mostrar estadisticas</button> -->
+            <div mat-list-item href="#">Link 1</div>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

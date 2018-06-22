@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BaseRequestOptions, RequestOptions } from '@angular/http';
 
 @Injectable()
 export class ConnectServer {
@@ -33,6 +34,6 @@ export class ConnectServer {
   }
 
   getInfoUser(id){
-    return this.http.post<Usuario>(this.host + "users/"+ id , { headers:this.getHeaders } );
+    return this.http.get<ResponseUserEst>(this.host + "users/"+ id , { headers: this.getHeaders() } );
   }
 }
