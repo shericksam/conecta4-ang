@@ -16,7 +16,7 @@ export class TableroComponent implements OnInit {
   currentId;
   player;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
-  ws = Ws('ws://192.168.1.80:3333')
+  ws = Ws('ws://192.168.1.113:3333')
   channel;
   isReady=false;
   

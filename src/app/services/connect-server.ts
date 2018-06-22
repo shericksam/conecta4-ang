@@ -10,7 +10,7 @@ export class ConnectServer {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Authorization', "Bearer " + localStorage.getItem("token"));
   }
-  host:String = "http://192.168.1.80:3333/";
+  host:String = "http://192.168.1.113:3333/";
   
   singIn(username, password){
     var data = {
