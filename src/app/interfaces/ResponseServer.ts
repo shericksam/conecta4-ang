@@ -1,3 +1,8 @@
 interface ResponseServer{
-    token: string
+    tokenObj: {
+        type: string,
+        token: string,
+        refreshToken: any
+    },
+    id: Number
 }

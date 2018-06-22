@@ -7,9 +7,11 @@ import { MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./dialog-data-example-dialog.component.css']
 })
 export class DialogDataExampleDialogComponent implements OnInit {
-  ganador;
+  titulo;
+  contenido;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.ganador = data.ganador;
+    this.titulo = data.titulo;
+    this.contenido = data.contenido;
   }
 
   ngOnInit() {

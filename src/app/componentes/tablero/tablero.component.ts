@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogDataExampleDialogComponent } from '../dialog-data-example-dialog/dialog-data-example-dialog.component';
 import Ws from '@adonisjs/websocket-client'
+import { ConnectServer } from '../../services/connect-server';
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
@@ -17,7 +18,7 @@ export class TableroComponent implements OnInit {
   channel;
   isReady=false;
   
-  constructor(public dialog: MatDialog) {      
+  constructor(public dialog: MatDialog, private connectServer:ConnectServer) {      
     var row1 = [0,0,0,0,0,0,0];
     var row2 = [0,0,0,0,0,0,0];
     var row3 = [0,0,0,0,0,0,0];
@@ -30,6 +31,14 @@ export class TableroComponent implements OnInit {
     this.matriz.push(row4);
     this.matriz.push(row5);
     this.matriz.push(row6);
+    this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
+      (response) => {
+        console.log(response);          
+      },
+      (error) => {
+        console.log(error);            
+      }
+    );
    }
 
   ngOnInit() {

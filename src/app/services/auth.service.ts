@@ -15,29 +15,36 @@ export class AuthService {
     // this.router.navigateByUrl('/tablero');
 
     this.connectServer.singIn(username,
-      password).subscribe((response) => {
-        if(response){
-          localStorage.setItem("token", this.token = response.token);
-          // this.getToken();
+      password)
+      .subscribe(
+        (data:ResponseServer) => {
+          console.log(data);
+          callback({ respuesta: true });
+          localStorage.setItem("token", this.token = data.tokenObj.token);
+          localStorage.setItem("idMe", String(data.id));
           this.router.navigateByUrl('/tablero');
-        }else{
+        },err => {
           callback({ respuesta: false });
+          console.log(err);
         }
-      });
+      );
   }
 
   signUpUser(username: string, password: string, callback){
     this.connectServer.singUp(username,
-      password).subscribe((response) => {
-        // console.log(response);
-        if(response){
-          localStorage.setItem("token", this.token = response.token);
+      password).subscribe(
+        data => {
+          console.log(data);
+          callback({ respuesta: true });
+          localStorage.setItem("token", this.token = data.tokenObj.token);
+          localStorage.setItem("idMe", String(data.id));
           // this.getToken();
           this.router.navigateByUrl('/tablero');
-        }else{
+        },err => {
           callback({ respuesta: false });
+          console.log(err);
         }
-      });
+      );
   }
 
   singOut(){
@@ -47,12 +54,13 @@ export class AuthService {
 
   public getToken() {
     this.token = localStorage.getItem("token");
+    
     return this.token;
   }
 
   isAuthenticated() {
     // return true;
-    console.log(this.token);
+    // console.log(this.token);
     return this.getToken() != null;
   }
 }
