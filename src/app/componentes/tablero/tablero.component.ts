@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogDataExampleDialogComponent } from '../dialog-data-example-dialog/dialog-data-example-dialog.component';
-
+import Ws from '@adonisjs/websocket-client'
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
@@ -13,6 +13,8 @@ export class TableroComponent implements OnInit {
   players = {};
   current;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
+  ws = Ws('ws://localhost:3333')
+  channel;
   
   constructor(public dialog: MatDialog) {      
     var row1 = [0,0,0,0,0,0,0];
@@ -33,6 +35,20 @@ export class TableroComponent implements OnInit {
     this.players[1] = "Amarillo";
     this.players[2] = "Rojo";
     this.start();
+    this.ws.connect();
+
+    this.channel = this.ws.subscribe('conecta');
+    const listen = this.ws.getSubscription('conecta');
+    //this.channel.emit('join',{user:0});
+
+    listen.on('new-selection',(data)=>{
+      this.makeMove(data.x, data.y, 0);
+    });
+
+    listen.on('winner',()=>{
+
+    });
+
   }
 
   start(){
@@ -52,6 +68,10 @@ export class TableroComponent implements OnInit {
       for (row = 5; row >= 0; row--){
         // console.log("row, col ", row, col);
           if (this.cellAt(row, col) == 0) {
+
+            var data = {user:0,x:row,y:col}
+            this.channel.emit('new-selection',data);
+
               this.makeMove(row, col, 0);
               break;
           }
