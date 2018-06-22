@@ -1,20 +1,26 @@
-<var></var>
-<mat-card class="example-card">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
-</mat-card>
+<!-- <var></var> -->
+<mat-grid-list cols="4" rowHeight="1:1" ng-if="estadisticas.length">
+  <mat-grid-tile>
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Encuentro</mat-card-title>
+        <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+      </mat-card-header>
+      <img mat-card-image src="https://d31fr2pwly4c4s.cloudfront.net/2/1/5/1018410_1_manchester-soundclash-team-hog-vs-team-x_400.jpg" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+        Shericksam vs iring 
+        </p> 
+        <p> Victorias: 2  -  Derrotas: 4</p>
+      </mat-card-content>
+      <!-- <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions> -->
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+  <div ng-else> No hay Estadisticas</div>
+
+

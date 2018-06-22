@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { SalasComponent } from '../salas/salas.component';
 
 @Component({
   selector: 'componentes/var',
@@ -15,9 +17,11 @@ export class VarComponent {
       map(result => result.matches)
     );
     
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,public dialog: MatDialog) {}
   
   estadisticas(){
-    console.log("est");
+    this.dialog.open(SalasComponent, {
+      
+    });
   }
 }

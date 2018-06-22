@@ -10,7 +10,7 @@
 <var></var>
 <div id="back">
     <!-- Component Dialog - alert -->
-    <div id="game">Jugador : <i [ngClass]="{'Amarillo': current == 1, 'Rojo': current == 2}" id="color">{{ colorLabel }}</i>
+    <div id="game">Jugador : <i [ngClass]="{'Amarillo': current == 1, 'Rojo': current == 2}" id="color">{{ players[current] }}</i>
         <div id="messages">
             <span id="p1">Rojo</span>
             <span id="p2">Amarillo</span>
