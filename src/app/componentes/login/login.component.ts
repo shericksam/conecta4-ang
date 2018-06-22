@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     const username = form.value.username;
     const password = form.value.pass;
     this.authService.signinUser(username, password, (respuesta) => {
-      console.log("callback", respuesta);
+      // console.log("callback", respuesta);
       this.dialog.closeAll();
       if(!respuesta.respuesta){
         form.resetForm();

@@ -7,7 +7,7 @@ export class ConnectServer {
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
-    this.headers = this.headers.set('token', localStorage.getItem("token"));
+    this.headers = this.headers.set('Authorization', "Bearer " + localStorage.getItem("token"));
   }
   host:String = "http://127.0.0.1:3333/";
   
@@ -30,5 +30,9 @@ export class ConnectServer {
 
   getHeaders(){
     return this.headers
+  }
+
+  getInfoUser(id){
+    return this.http.post<Usuario>(this.host + "users/"+ id , { headers:this.getHeaders } );
   }
 }

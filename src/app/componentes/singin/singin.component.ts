@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { NgForOfContext } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { DialogDataExampleDialogComponent } from '../dialog-data-example-dialog/dialog-data-example-dialog.component';
 
 @Component({
   selector: 'app-singin',
@@ -12,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class SinginComponent implements OnInit {
   usernameFail = "El username es necesario";
   passFail = "La contraseña es necesaria";
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private authService: AuthService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private authService: AuthService,public dialog: MatDialog) {
     // console.log(data.value.username);
     // this.form.value.username = data.value.username;
    }
@@ -26,10 +27,15 @@ export class SinginComponent implements OnInit {
     const username = form.value.username;
     const password = form.value.pass;
     this.authService.signUpUser(username, password, (respuesta) => {
-      if(!respuesta){
+      this.dialog.closeAll();
+      if(!respuesta.respuesta){
         form.resetForm();
-        this.usernameFail = "Verifique campo";
-        this.passFail = "Verifique campo";
+        this.dialog.open(DialogDataExampleDialogComponent, {
+          data: {
+            titulo : "Verifique",
+            contenido: "El usuario ya existe"
+          }
+        });
       }
     });
   }

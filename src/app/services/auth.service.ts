@@ -17,11 +17,11 @@ export class AuthService {
     this.connectServer.singIn(username,
       password)
       .subscribe(
-        data => {
+        (data:ResponseServer) => {
           console.log(data);
           callback({ respuesta: true });
           localStorage.setItem("token", this.token = data.tokenObj.token);
-          // this.getToken();
+          localStorage.setItem("idMe", String(data.id));
           this.router.navigateByUrl('/tablero');
         },err => {
           callback({ respuesta: false });
@@ -37,6 +37,7 @@ export class AuthService {
           console.log(data);
           callback({ respuesta: true });
           localStorage.setItem("token", this.token = data.tokenObj.token);
+          localStorage.setItem("idMe", String(data.id));
           // this.getToken();
           this.router.navigateByUrl('/tablero');
         },err => {
@@ -53,12 +54,13 @@ export class AuthService {
 
   public getToken() {
     this.token = localStorage.getItem("token");
+    
     return this.token;
   }
 
   isAuthenticated() {
     // return true;
-    console.log(this.token);
+    // console.log(this.token);
     return this.getToken() != null;
   }
 }
