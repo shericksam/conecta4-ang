@@ -53,14 +53,24 @@ export class TableroComponent implements OnInit {
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
-    this.channel.emit('join',{user:localStorage.getItem("idMe")},function(data){
+    this.channel.emit('join', { user:localStorage.getItem("idMe")},function(data){
       console.log(data);
       this.player = data;
     });
 
     listen.on('joined',(data)=>{
       console.log(data);
-      this.player = data;
+      this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
+        (response) => {
+          console.log(response); 
+          this.player = data; 
+          this.players[data.player] = response.user.username;        
+        },
+        (error) => {
+          console.log(error);            
+        }
+      );
+      
     });
 
     listen.on('new-selection',(data)=>{
@@ -73,6 +83,7 @@ export class TableroComponent implements OnInit {
 
     listen.on('current-turn',(data)=>{
       console.log("current turn: ",data);
+      
       this.currentId = data.user;
       this.current = data.player;
     });
@@ -84,6 +95,16 @@ export class TableroComponent implements OnInit {
       this.isReady = true;
       this.currentId = data.user;
       this.current = data.player
+      this.connectServer.getInfoUser(data.user).subscribe(
+        (response) => {
+          console.log(response); 
+          this.player = data; 
+          this.players[data.player] = response.user.username;        
+        },
+        (error) => {
+          console.log(error);            
+        }
+      );
     });
 
   }
