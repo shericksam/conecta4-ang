@@ -33,6 +33,7 @@ export class TableroComponent implements OnInit {
    }
 
   ngOnInit() {
+
     this.players[1] = "Amarillo";
     this.players[2] = "Rojo";
     this.start();
@@ -40,7 +41,13 @@ export class TableroComponent implements OnInit {
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
-    this.channel.emit('join',{user:1});
+    this.channel.emit('join',{user:1},function(data){
+      console.log(data);
+    });
+
+    listen.on('joined',(data)=>{
+      console.log(data);
+    });
 
     listen.on('new-selection',(data)=>{
       this.makeMove(data.x, data.y, 0);
