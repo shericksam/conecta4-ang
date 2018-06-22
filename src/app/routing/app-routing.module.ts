@@ -14,10 +14,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'singin', pathMatch: 'full' },
   { path: "singin", component: LoginComponent},
   { path: "tablero", component: TableroComponent,canActivate:[AuthGuard] },
-  { path: "sala", component: SalasComponent,canActivate:[AuthGuard] },
+  // { path: "sala", component: SalasComponent,canActivate:[AuthGuard] },
   { path: '**', component: LoginComponent }  
 ];
-export const componentesI = []
+export const componentesI = [LoginComponent, TableroComponent]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

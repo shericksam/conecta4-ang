@@ -13,7 +13,7 @@ import { ConnectServer } from './services/connect-server';
 import { AuthService } from './services/auth.service';
 import { SinginComponent } from './componentes/singin/singin.component';
 import { Http, HttpModule } from '@angular/http';
-import { AppRoutingModule } from './routing/app-routing.module';
+import { AppRoutingModule, componentesI } from './routing/app-routing.module';
 import { AuthGuard } from './services/auth-guard.service';
 import { SalasComponent } from './componentes/salas/salas.component';
 import {MatCardModule} from '@angular/material/card';
@@ -21,8 +21,7 @@ import {MatCardModule} from '@angular/material/card';
   declarations: [
     AppComponent,
     VarComponent,
-    TableroComponent,
-    LoginComponent,
+    componentesI,
     DialogDataExampleDialogComponent,
     SinginComponent,
     SalasComponent    
