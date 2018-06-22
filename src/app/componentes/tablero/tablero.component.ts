@@ -34,15 +34,6 @@ export class TableroComponent implements OnInit {
     this.matriz.push(row5);
     this.matriz.push(row6);
     
-    this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
-      (response) => {
-        console.log(response);  
-        this.players[1] = response.user.username;        
-      },
-      (error) => {
-        console.log(error);            
-      }
-    );
    }
 
   ngOnInit() {
