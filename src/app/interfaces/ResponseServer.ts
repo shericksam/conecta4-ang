@@ -1,0 +1,3 @@
+interface ResponseServer{
+    token: string
+}
