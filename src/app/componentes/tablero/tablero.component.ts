@@ -69,7 +69,7 @@ export class TableroComponent implements OnInit {
     });
 
     listen.on('winner',(data)=>{
-      this.openFinishGame();
+      this.openFinishGame(data);
     });
 
     listen.on('current-turn',(data)=>{
@@ -155,11 +155,11 @@ export class TableroComponent implements OnInit {
     
   }
 
-  openFinishGame() {
+  openFinishGame(data) {
     this.dialog.open(DialogDataExampleDialogComponent, {
       data: {
         titulo : "Fin del juego!!",
-        contenido: "El jugador " + this.players[this.current] + " a ganado!!"
+        contenido: "El jugador " + this.players[data.player] + " a ganado!!"
       }
     });
 
