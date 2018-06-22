@@ -15,6 +15,7 @@ export class TableroComponent implements OnInit {
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
   ws = Ws('ws://localhost:3333')
   channel;
+  isReady=false;
   
   constructor(public dialog: MatDialog) {      
     var row1 = [0,0,0,0,0,0,0];
@@ -39,14 +40,23 @@ export class TableroComponent implements OnInit {
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
-    //this.channel.emit('join',{user:0});
+    this.channel.emit('join',{user:1});
 
     listen.on('new-selection',(data)=>{
       this.makeMove(data.x, data.y, 0);
     });
 
-    listen.on('winner',()=>{
+    listen.on('winner',(data)=>{
+      this.openFinishGame();
+    });
 
+    listen.on('current-turn',(data)=>{
+      this.current;
+    });
+
+    listen.on('ready-game',(data)=>{
+      alert("Empieza el juego!");
+      this.isReady = true;
     });
 
   }
@@ -63,19 +73,20 @@ export class TableroComponent implements OnInit {
 
   onClick(col, row){  
     //   console.log('color' + row + "" + col);
-    
+    if(!this.isReady) return;
     if (!this.finished){
-      for (row = 5; row >= 0; row--){
-        // console.log("row, col ", row, col);
-          if (this.cellAt(row, col) == 0) {
+      if (this.cellAt(row, col) == 0) {
 
-            var data = {user:0,x:row,y:col}
-            this.channel.emit('new-selection',data);
+        var data = {user:1,x:row,y:col}
+        this.channel.emit('selected',data);
 
-              this.makeMove(row, col, 0);
-              break;
-          }
+          this.makeMove(row, col, 0);
+          //break;
       }
+      /*for (row = 5; row >= 0; row--){
+        // console.log("row, col ", row, col);
+         
+      }*/
     }
   }
 
@@ -83,7 +94,7 @@ export class TableroComponent implements OnInit {
     this.matriz[row][col] = this.current;
     this.current = this.current == 1 ? 2 : 1;
     this.colorLabel = this.players[this.current];
-
+    
   }
 
   cellAt(row, col) {
