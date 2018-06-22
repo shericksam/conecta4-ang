@@ -13,6 +13,8 @@ export class TableroComponent implements OnInit {
   matriz= new Array();
   players = {};
   current;
+  currentId;
+  player;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
   ws = Ws('ws://localhost:3333')
   channel;
@@ -53,30 +55,35 @@ export class TableroComponent implements OnInit {
     const listen = this.ws.getSubscription('conecta');
     this.channel.emit('join',{user:localStorage.getItem("idMe")},function(data){
       console.log(data);
+      this.player = data;
     });
 
     listen.on('joined',(data)=>{
       console.log(data);
+      this.player = data;
     });
 
     listen.on('new-selection',(data)=>{
       this.makeMove(data.x, data.y, 0);
     });
-
+    
     listen.on('winner',(data)=>{
       this.openFinishGame();
     });
 
     listen.on('current-turn',(data)=>{
       console.log("current turn: ",data);
-      this.current = data;
+      this.currentId = data.user;
+      this.current = data.player;
     });
 
     listen.on('ready-game',(data)=>{
       alert("Empieza el juego!");
       console.log("CURRENT: ",data);
+      this.start();
       this.isReady = true;
-      this.current = data;
+      this.currentId = data.user;
+      this.current = data.player
     });
 
   }
@@ -93,8 +100,10 @@ export class TableroComponent implements OnInit {
 
   onClick(col, row){  
     //   console.log('color' + row + "" + col);
+    console.log("READY: ",this.isReady);
     if(!this.isReady) return;
-    if(this.current != localStorage.getItem("idMe")) return;
+    console.log("ID: ",this.currentId);
+    if(this.currentId != localStorage.getItem("idMe")) return;
 
     if (!this.finished){
       if (this.cellAt(row, col) == 0) {
