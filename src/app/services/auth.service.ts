@@ -15,29 +15,35 @@ export class AuthService {
     // this.router.navigateByUrl('/tablero');
 
     this.connectServer.singIn(username,
-      password).subscribe((response) => {
-        if(response){
-          localStorage.setItem("token", this.token = response.token);
+      password)
+      .subscribe(
+        data => {
+          console.log(data);
+          callback({ respuesta: true });
+          localStorage.setItem("token", this.token = data.tokenObj.token);
           // this.getToken();
           this.router.navigateByUrl('/tablero');
-        }else{
+        },err => {
           callback({ respuesta: false });
+          console.log(err);
         }
-      });
+      );
   }
 
   signUpUser(username: string, password: string, callback){
     this.connectServer.singUp(username,
-      password).subscribe((response) => {
-        // console.log(response);
-        if(response){
-          localStorage.setItem("token", this.token = response.token);
+      password).subscribe(
+        data => {
+          console.log(data);
+          callback({ respuesta: true });
+          localStorage.setItem("token", this.token = data.tokenObj.token);
           // this.getToken();
           this.router.navigateByUrl('/tablero');
-        }else{
+        },err => {
           callback({ respuesta: false });
+          console.log(err);
         }
-      });
+      );
   }
 
   singOut(){

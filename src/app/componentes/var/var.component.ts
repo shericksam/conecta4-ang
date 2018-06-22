@@ -17,4 +17,7 @@ export class VarComponent {
     
   constructor(private breakpointObserver: BreakpointObserver) {}
   
+  estadisticas(){
+    console.log("est");
   }
+}

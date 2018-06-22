@@ -16,7 +16,7 @@ export class ConnectServer {
       username: username,
       password: password
     }
-    return this.http.post<ResponseServer>(this.host + "login", { headers: this.getHeaders(), params: data });
+    return this.http.post<ResponseServer>(this.host + "login", data);
   }
   singUp(username, password){
     // console.log(this.host + "users");
@@ -24,7 +24,7 @@ export class ConnectServer {
       username: username,
       password: password
     }
-    return this.http.post<ResponseServer>(this.host + "users", { headers: this.getHeaders(), params: data });
+    return this.http.post<ResponseServer>(this.host + "users", data);
     // return this.http.post(this.host + "users", data);
   }
 

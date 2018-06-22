@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MatDialog } from '@angular/material';
 import { SinginComponent } from '../singin/singin.component';
+import { DialogDataExampleDialogComponent } from '../dialog-data-example-dialog/dialog-data-example-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +24,16 @@ export class LoginComponent implements OnInit {
     const username = form.value.username;
     const password = form.value.pass;
     this.authService.signinUser(username, password, (respuesta) => {
-      if(!respuesta){
+      console.log("callback", respuesta);
+      this.dialog.closeAll();
+      if(!respuesta.respuesta){
         form.resetForm();
-        this.usernameFail = "Verifique campo";
-        this.passFail = "Verifique campo";
+        this.dialog.open(DialogDataExampleDialogComponent, {
+          data: {
+            titulo : "Verifique",
+            contenido: "Verifique los campos"
+          }
+        });
       }
     });
   }
