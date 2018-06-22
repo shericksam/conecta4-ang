@@ -18,7 +18,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { SalasComponent } from './componentes/salas/salas.component';
 import {MatCardModule} from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -43,10 +43,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatGridListModule
   ],
   providers: [ConnectServer, AuthService, AuthGuard],
-  entryComponents: [DialogDataExampleDialogComponent, SinginComponent],
+  entryComponents: [DialogDataExampleDialogComponent, SinginComponent, SalasComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -34,7 +34,7 @@ export class TableroComponent implements OnInit {
     
     this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
       (response) => {
-        console.log(response.user.username);  
+        console.log(response);  
         this.players[1] = response.user.username;        
       },
       (error) => {
@@ -137,8 +137,8 @@ export class TableroComponent implements OnInit {
   openFinishGame() {
     this.dialog.open(DialogDataExampleDialogComponent, {
       data: {
-        titulo : "Felicidades!!",
-        ganador: this.players[this.current]
+        titulo : "Fin del juego!!",
+        contenido: "El jugador " + this.players[this.current] + " a ganado!!"
       }
     });
 
