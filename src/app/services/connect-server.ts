@@ -16,15 +16,19 @@ export class ConnectServer {
       username: username,
       password: password
     }
-    return this.http.post<ResponseServer>(this.host + "login", { headers: this.headers, params: data });
+    return this.http.post<ResponseServer>(this.host + "login", { headers: this.getHeaders(), params: data });
   }
   singUp(username, password){
-    console.log(this.host + "users");
+    // console.log(this.host + "users");
     var data = {
       username: username,
       password: password
     }
-    return this.http.post<ResponseServer>(this.host + "users", { headers: this.headers, params: data });
+    return this.http.post<ResponseServer>(this.host + "users", { headers: this.getHeaders(), params: data });
     // return this.http.post(this.host + "users", data);
+  }
+
+  getHeaders(){
+    return this.headers
   }
 }
