@@ -38,15 +38,15 @@ export class TableroComponent implements OnInit {
 
   ngOnInit() {
     // this.players[1] = "Amarillo";
-    this.players[2] = "Rojo";
-    this.start();
+    // this.players[2] = "Rojo";
+    // this.start();
     this.ws.connect();
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
     this.channel.emit('join', { user:localStorage.getItem("idMe")},function(data){
-      console.log(data);
-      this.player = data;
+      // console.log(data);
+      // this.player = data;
     });
 
     listen.on('joined',(data)=>{
@@ -73,8 +73,7 @@ export class TableroComponent implements OnInit {
     });
 
     listen.on('current-turn',(data)=>{
-      console.log("current turn: ",data);
-      
+      console.log("current turn: ",data);      
       this.currentId = data.user;
       this.current = data.player;
     });
@@ -84,24 +83,39 @@ export class TableroComponent implements OnInit {
       console.log("CURRENT: ",data);
       this.start();
       this.isReady = true;
-      this.currentId = data.user;
-      this.current = data.player
-      this.connectServer.getInfoUser(data.user).subscribe(
-        (response) => {
-          console.log(response); 
-          this.player = data; 
-          this.players[data.player] = response.user.username;        
-        },
-        (error) => {
-          console.log(error);            
-        }
-      );
+      this.currentId = data.current.user;
+      this.current = data.current.player;
+
+      if(data.players[0].user == localStorage.getItem("idMe")){
+        this.connectServer.getInfoUser(data.players[1].user).subscribe(
+          (response) => {
+            console.log(response); 
+            this.players[(data.players[1].player)] = response.user.username;        
+          },
+          (error) => {
+            console.log(error);            
+          }
+        );
+      }else{
+        this.connectServer.getInfoUser(data.players[0].user).subscribe(
+          (response) => {
+            console.log(response); 
+            this.player = data; 
+            this.players[(data.players[0].player)] = response.user.username;        
+          },
+          (error) => {
+            console.log(error);            
+          }
+        );
+      }
+
+      
     });
 
   }
 
   start(){
-    this.current = this.laststart = (this.laststart + 1) % 2;
+    // this.current = this.laststart = (this.laststart + 1) % 2;
     this.finished = false;
     this.colorLabel = this.players[this.current = (this.current + 1) % 2];
     for (var a = 0; a < 6; a++)//row
