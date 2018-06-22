@@ -12,7 +12,7 @@ export class SalasComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, 
       private connectServer:ConnectServer) { }
-  estadisticas;
+  estadisticas = {};
   ngOnInit() {
     this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
       (response) => {

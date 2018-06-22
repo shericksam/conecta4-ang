@@ -1,5 +1,5 @@
 <!-- <var></var> -->
-<mat-grid-list cols="4" rowHeight="100px" *ngIf="estadisticas">
+<mat-grid-list cols="4" rowHeight="100px" *ngIf="estadisticas.length > 0;then content" >
   <mat-grid-tile
   [colspan]="1"
   [rowspan]="2">
@@ -23,6 +23,8 @@
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
-  <div ng-else> No hay Estadisticas</div>
+  <ng-template #content>
+    <div> No hay Estadisticas</div> 
+  </ng-template>
 
 
