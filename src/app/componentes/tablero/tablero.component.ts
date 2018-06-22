@@ -31,6 +31,7 @@ export class TableroComponent implements OnInit {
     this.matriz.push(row4);
     this.matriz.push(row5);
     this.matriz.push(row6);
+    
     this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
       (response) => {
         console.log(response);          
@@ -50,7 +51,7 @@ export class TableroComponent implements OnInit {
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
-    this.channel.emit('join',{user:1},function(data){
+    this.channel.emit('join',{user:localStorage.getItem("idMe")},function(data){
       console.log(data);
     });
 
@@ -67,12 +68,15 @@ export class TableroComponent implements OnInit {
     });
 
     listen.on('current-turn',(data)=>{
-      this.current;
+      console.log("current turn: ",data);
+      this.current = data;
     });
 
     listen.on('ready-game',(data)=>{
       alert("Empieza el juego!");
+      console.log("CURRENT: ",data);
       this.isReady = true;
+      this.current = data;
     });
 
   }
@@ -90,10 +94,12 @@ export class TableroComponent implements OnInit {
   onClick(col, row){  
     //   console.log('color' + row + "" + col);
     if(!this.isReady) return;
+    if(this.current != localStorage.getItem("idMe")) return;
+
     if (!this.finished){
       if (this.cellAt(row, col) == 0) {
 
-        var data = {user:1,x:row,y:col}
+        var data = {user:localStorage.getItem("idMe"),x:row,y:col}
         this.channel.emit('selected',data);
 
           this.makeMove(row, col, 0);
