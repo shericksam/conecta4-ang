@@ -44,13 +44,10 @@ export class TableroComponent implements OnInit {
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
-    this.channel.emit('join', { user:localStorage.getItem("idMe")},function(data){
-      console.log(data);
-      this.player = data;
-    });
+    this.channel.emit('join', { user:localStorage.getItem("idMe")});
 
     listen.on('joined',(data)=>{
-      console.log(data);
+      console.log("JOINED: ",data);
       this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
         (response) => {
           console.log(response); 
@@ -81,14 +78,15 @@ export class TableroComponent implements OnInit {
 
     listen.on('ready-game',(data)=>{
       alert("Empieza el juego!");
-      console.log("CURRENT: ",data);
+      console.log("CURRENT READY GAME: ",data);
       this.start();
       this.isReady = true;
-      this.currentId = data.user;
-      this.current = data.player
+      this.currentId = data.current.user;
+      this.current = data.current.player;
       this.connectServer.getInfoUser(data.user).subscribe(
         (response) => {
-          console.log(response); 
+          console.log("RESPUESTA: ",response); 
+          
           this.player = data; 
           this.players[data.player] = response.user.username;        
         },
@@ -156,6 +154,7 @@ export class TableroComponent implements OnInit {
   }
 
   openFinishGame(data) {
+   
     this.dialog.open(DialogDataExampleDialogComponent, {
       data: {
         titulo : "Fin del juego!!",
