@@ -11,12 +11,13 @@ import { ConnectServer } from '../../services/connect-server';
 export class TableroComponent implements OnInit {
   finished:boolean = false;
   matriz= new Array();
-  players = {};
+  players = [];
   current;
   currentId;
   player;
+  avisado = false;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
-  ws = Ws('ws://192.168.1.80:3333')
+  ws = Ws('ws://192.168.43.67:3333')
   channel;
   isReady=false;
   
@@ -38,13 +39,14 @@ export class TableroComponent implements OnInit {
 
   ngOnInit() {
     // this.players[1] = "Amarillo";
-    this.players[2] = "Rojo";
-    this.start();
+    // this.players[2] = "Rojo";
+    // this.start();
     this.ws.connect();
 
     this.channel = this.ws.subscribe('conecta');
     const listen = this.ws.getSubscription('conecta');
     this.channel.emit('join', { user:localStorage.getItem("idMe")});
+
 
     listen.on('joined',(data)=>{
       console.log("JOINED: ",data);
@@ -70,36 +72,59 @@ export class TableroComponent implements OnInit {
     });
 
     listen.on('current-turn',(data)=>{
-      console.log("current turn: ",data);
-      
+      console.log("current turn: ",data);      
       this.currentId = data.user;
       this.current = data.player;
     });
 
     listen.on('ready-game',(data)=>{
-      alert("Empieza el juego!");
+      if(!this.avisado){
+        //alert("Empieza el juego!");
+        this.avisado = true;
+      }
+        
       console.log("CURRENT READY GAME: ",data);
       this.start();
       this.isReady = true;
       this.currentId = data.current.user;
       this.current = data.current.player;
-      this.connectServer.getInfoUser(data.user).subscribe(
-        (response) => {
-          console.log("RESPUESTA: ",response); 
-          
-          this.player = data; 
-          this.players[data.player] = response.user.username;        
-        },
-        (error) => {
-          console.log(error);            
-        }
-      );
+
+
+      if(data.players[0].user == localStorage.getItem("idMe")){
+        this.connectServer.getInfoUser(data.players[1].user).subscribe(
+          (response) => {
+            console.log(response); 
+            this.players[(data.players[1].player)] = response.user.username;   
+            console.log("REQUEST 1: ",this.players);  
+            console.log("PLAYER [0]: ",data.players[0]);
+            console.log("PLAYER [1]: ",data.players[1]);  
+          },
+          (error) => {
+            console.log(error);            
+          }
+        );
+      }else{
+        this.connectServer.getInfoUser(data.players[0].user).subscribe(
+          (response) => {
+            console.log(response);
+            console.log("REQUEST 2: ",this.players); 
+            console.log("PLAYER [0]: ",data.players[0]);
+            console.log("PLAYER [1]: ",data.players[1]);
+            //this.player = data; 
+            this.players[(data.players[0].player)] = response.user.username;   
+            console.log("PLAYERS: ",this.players);      
+          },
+          (error) => {
+            console.log(error);            
+          }
+        );
+      }      
     });
 
   }
 
   start(){
-    this.current = this.laststart = (this.laststart + 1) % 2;
+    // this.current = this.laststart = (this.laststart + 1) % 2;
     this.finished = false;
     this.colorLabel = this.players[this.current = (this.current + 1) % 2];
     for (var a = 0; a < 6; a++)//row

@@ -14,15 +14,7 @@ export class SalasComponent implements OnInit {
       private connectServer:ConnectServer) { }
   estadisticas = {};
   ngOnInit() {
-    this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
-      (response) => {
-        console.log(response.user.username);     
-        this.estadisticas = response.estadisticas;
-      },
-      (error) => {
-        console.log(error);            
-      }
-    );
+    
   }
 
 }

@@ -2,15 +2,16 @@
     <mat-sidenav #drawer class="sidenav"  fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="'over'" [opened]="!(isHandset$ | async)">
         <mat-toolbar color="primary">Estadisticas</mat-toolbar>
         <mat-nav-list>
-            <!-- <button (click)="estadisticas">Mostrar estadisticas</button> -->
-            <a mat-list-item (click)="estadisticas()"  href="javascript:">Estadisticas</a>
+            <!-- <button (click)="estadisticas">Mostrar estadisticas</button> -->`
+            
             <!-- <div> -->
-                <!-- <p>Shericksam vs irving </p> 
-                <p>Victorias: 2 - Derrotas: 3</p> -->
+               
+                <p>Victorias: {{ estadisticasI ? estadisticasI.victorias : '0' }} - Derrotas: {{ estadisticasI ? estadisticasI.derrotas : '0'}}</p> 
                 <!-- <app-salas></app-salas> -->
                     <!-- <p>{{ jugador 1 }} vs {{ jugador2 }} </p> <br>
                     <p>Victorias: {{ j1V }} - Derrotas: {{ j1D }}</p> -->
             <!-- </div> -->
+            <button type="button"(click)="cerrar()" >cerrar sesion</button>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
