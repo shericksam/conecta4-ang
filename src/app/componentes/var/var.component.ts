@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,9 +12,11 @@ import { Router } from '@angular/router';
   templateUrl: './var.component.html',
   styleUrls: ['./var.component.css']
 })
-export class VarComponent {
+export class VarComponent implements OnInit{
   toggle:boolean = false;
   estadisticasI =  {};
+  @Input() estadisticas = {};  
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -22,17 +24,12 @@ export class VarComponent {
     
   constructor(private breakpointObserver: BreakpointObserver,public dialog: MatDialog
     ,private connectServer:ConnectServer,private router: Router) {
-      this.connectServer.getInfoUser(localStorage.getItem("idMe")).subscribe(
-        (response) => {
-          console.log(response.estadisticas);     
-          this.estadisticasI = response.estadisticas;
-        },
-        (error) => {
-          console.log(error);            
-        }
-      );
+      
     }
-  
+    ngOnInit(){
+      console.log("estadisticas-------------", this.estadisticas);
+      
+    }
     cerrar(){
       localStorage.clear();
       this.router.navigateByUrl('/');

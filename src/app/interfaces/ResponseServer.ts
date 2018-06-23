@@ -4,5 +4,5 @@ interface ResponseServer{
         token: string;
         refreshToken: any;
     };
-    id: Number;
+    id: number;
 }

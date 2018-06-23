@@ -1,6 +1,6 @@
 interface Usuario{
-    id: Number;
+    id: number;
     username: string;
     password: string;
-    state: Number;
+    state: number;
 }

@@ -1,6 +1,6 @@
 interface Estadistica{
-    id: Number;
-    fk_user: Number;
-    victorias: Number;
-    derrotas: Number;
+    id: number;
+    fk_user: number;
+    victorias: number;
+    derrotas: number;
 }

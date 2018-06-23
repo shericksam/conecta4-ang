@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject, Output, EventEmitter } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogDataExampleDialogComponent } from '../dialog-data-example-dialog/dialog-data-example-dialog.component';
 import Ws from '@adonisjs/websocket-client'
 import { ConnectServer } from '../../services/connect-server';
+
+
 @Component({
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
@@ -15,11 +17,13 @@ export class TableroComponent implements OnInit {
   current;
   currentId;
   player;
+  estadisticas: Estadistica;
   avisado = false;
   colorLabel; cid; newgameLabel; wonLabel; laststart = 1;
-  ws = Ws('ws://192.168.43.67:3333')
+  ws = Ws('ws://192.168.1.113:3333')
   channel;
   isReady=false;
+  @Output() clicked=new EventEmitter<string>();  
   
   constructor(public dialog: MatDialog, private connectServer:ConnectServer) {      
     var row1 = [0,0,0,0,0,0,0];
@@ -54,7 +58,8 @@ export class TableroComponent implements OnInit {
         (response) => {
           console.log(response); 
           this.player = data; 
-          this.players[data.player] = response.user.username;        
+          this.players[data.player] = response.user.username;
+          this.estadisticas = response.estadisticas;    
         },
         (error) => {
           console.log(error);            
@@ -126,7 +131,7 @@ export class TableroComponent implements OnInit {
   start(){
     // this.current = this.laststart = (this.laststart + 1) % 2;
     this.finished = false;
-    this.colorLabel = this.players[this.current = (this.current + 1) % 2];
+    // this.colorLabel = this.players[this.current = (this.current + 1) % 2];
     for (var a = 0; a < 6; a++)//row
         for (var b = 0; b < 7; b++)//col
             this.matriz[a][b] = 0;
@@ -134,10 +139,11 @@ export class TableroComponent implements OnInit {
   }
 
   onClick(col, row){  
-    //   console.log('color' + row + "" + col);
-    console.log("READY: ",this.isReady);
+    // this.clicked.emit("112");
+      // console.log(this.estadisticas);
+    // console.log("READY: ",this.isReady);
     if(!this.isReady) return;
-    console.log("ID: ",this.currentId);
+    // console.log("ID: ",this.currentId);
     if(this.currentId != localStorage.getItem("idMe")) return;
 
     if (!this.finished){
@@ -179,7 +185,12 @@ export class TableroComponent implements OnInit {
   }
 
   openFinishGame(data) {
-   
+    if(this.player.user == data.user){
+      this.estadisticas.victorias = this.estadisticas.victorias + 1;
+    }else{
+      this.estadisticas.derrotas = this.estadisticas.derrotas + 1;      
+    }
+
     this.dialog.open(DialogDataExampleDialogComponent, {
       data: {
         titulo : "Fin del juego!!",
@@ -188,7 +199,7 @@ export class TableroComponent implements OnInit {
     });
 
     this.start();
-    this.finished = true;
+    // this.finished = true;
   }
 }
 

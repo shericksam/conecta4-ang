@@ -7,7 +7,7 @@
     <canvas id="background" width="1200" height="720"></canvas>
 
 </div> -->
-<var></var>
+<var [estadisticas]=estadisticas></var>
 <div id="back">
     <!-- Component Dialog - alert -->
     <div id="game">Jugador : <i [ngClass]="{'Amarillo': current == 1, 'Rojo': current == 2}" id="color">{{ players[current] }}</i>
@@ -38,8 +38,8 @@
                 <td *ngFor="let i of [0,1,2,3,4,5,6]" (click)="onClick(i, 5)" [ngClass]="{'Amarillo': matriz[5][i] == 1, 'Rojo': matriz[5][i] == 2}"></td>
             </tr>
         </table>
-        <!-- <div class="left leg"></div> -->
-        <!-- <div class="right leg"></div> -->
+        <div class="left leg"></div>
+        <div class="right leg"></div>
         <!-- <button (click)="start()">Nuevo juego</button> -->
     </div>
 </div>
